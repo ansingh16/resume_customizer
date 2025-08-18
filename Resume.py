@@ -33,30 +33,48 @@ class ResumeModifier:
             self.job_description_content = None
 
 
-    def extract_resume_sections(self):
+    def extract_intro_and_sections(self):
         """
-        Extract only LaTeX resume sections, skipping preamble and personal info.
-        Returns a list of sections as strings.
+        Extract the personal info / intro and the sections separately from a LaTeX resume.
+        Returns:
+            intro: str (personal info at top)
+            sections: list of strings (each LaTeX section)
         """
-        # Ensure document starts correctly
-        if "\\begin{document}" not in self.resume_content:
-            raise ValueError("No \\begin{document} found in LaTeX file.")
-
-        # Extract everything after \begin{document}
+        
+        # Everything between \begin{document} and \end{document}
         body_start = self.resume_content.split("\\begin{document}", 1)[1]
+        body, _, _ = body_start.partition("\\end{document}")
 
-        # Extract everything before \end{document}, if present
-        body, sep, after = body_start.partition("\\end{document}")
+        # Split into intro (everything before first section) and sections
+        match = re.search(r"\\section\*?|\\section", body)
+        if not match:
+            raise ValueError("No sections found in resume.")
 
-        # Skip personal info: start from first \section or \section*
-        first_section_match = re.search(r"\\section\*?|\\section", body)
-        if not first_section_match:
-            raise ValueError("No \\section found in LaTeX resume body.")
+        intro = body[:match.start()].strip()  # personal info
+        sections_text = body[match.start():]
 
-        sections_text = body[first_section_match.start():]
-
-        # Split by section headers
+        # Split sections by \section or \section*
         sections = re.split(r"(?=\\section\*?|\\section)", sections_text)
         sections = [sec.strip() for sec in sections if sec.strip()]
 
-        return sections
+        self.intro = intro
+        self.sections = sections
+
+    
+    def assemble_resume(self,tailored_sections, output_file="tailored_resume.tex"):
+        """
+        Reassemble LaTeX resume keeping preamble, intro (personal info), and modified sections.
+        """
+        
+
+        preamble, _, _ = self.resume_content.partition("\\begin{document}")
+        _, sep, end = self.resume_content.rpartition("\\end{document}")
+        end_document = sep + end if sep else "\\end{document}"
+
+        # Join sections safely
+        new_content = preamble + "\\begin{document}\n\n" + self.intro + "\n\n" + "\n\n".join(tailored_sections) + "\n\n" + end_document
+
+        with open(output_file, "w", encoding="utf-8") as f:
+            f.write(new_content)
+
+        print(f"Tailored resume saved to {output_file}")
