@@ -1,0 +1,61 @@
+About the job
+Job title: Data Scientist
+
+Salary: £72k
+
+Location: Pier Walk, North Greenwich
+
+Contract Type: Permanent TFL Band 3
+
+Overview Of Project/role
+
+The Data Scientist will collaborate closely with the Lead Data Scientist, Principal Data Scientist and cross-functional teams to design, deliver and continually enhance advanced data-driven solutions and analytical insights for TfL. You will prepare, structure and analyse diverse datasets (structured and unstructured) to ensure they're robust, reliable and fit for analytical purposes, including suitability for leveraging AI and Generative AI techniques.
+
+Your role requires you to apply statistical, mathematical and scientific methods including exploratory data analysis, predictive modelling, machine learning, deep learning, hypothesis testing, optimisation techniques and emerging Generative AI methodologies to extract meaningful insights that inform strategic and operational decisions. You'll confidently evaluate analytical models and methodologies, refining and validating their effectiveness, with particular attention to optimising the performance of machine learning models.
+
+You will engage proactively with stakeholders to define business problems clearly and translate them into analytical projects. Your strong communication skills will ensure that complex findings are presented clearly through compelling visualisations and narratives, tailored to technical and non-technical audiences alike. You will be skilled at highlighting potential applications of AI-driven solutions in an accessible, inspiring way, guiding stakeholders who are new to the technology toward practical, value-adding solutions
+
+As part of your responsibilities, you will explore innovative analytical techniques, contributing to TfL’s culture of continuous learning and improvement, including staying abreast of advancements in AI and Generative AI. You will also promote adherence to best practices (including ethical standards) for model training and development, deployment and performance monitoring (MLOps).
+
+Key Accountabilities
+
+Develop robust analytical solutions and algorithms from extensive customer and operational datasets, including ticketing, sensor, telemetry and vehicle log data. 
+Integrate and analyse complex datasets to derive actionable insights supporting key operational and strategic decisions across TfL. 
+Ensure the practical application of analytical findings, providing development teams with clear methodologies ready for implementation, including applications leveraging AI and machine learning. 
+Identify operational efficiencies and opportunities for improvement through rigorous analytical approaches. 
+Research, prototype, test and enhance innovative approaches in machine learning, deep learning, AI and Generative AI. 
+Actively promote best practices and standardisation within TfL’s data science community. 
+Build, test and iteratively refine scripts and algorithms using data science programming best practices, including version control and reproducibility. 
+Work collaboratively with data engineers and architects to ensure efficient, reliable data pipelines and identify opportunities to enhance data quality and accessibility. 
+Develop a clear understanding of product delivery methods, including agile methodologies and apply these principles to manage priorities effectively. 
+Collaborate closely with product managers and other specialists to define requirements for a data science solution ensuring alignment with product goals and business objectives. 
+Actively participate in the development and mentorship of data science graduates and associate data scientists, fostering a culture of learning and capability growth within the data science team. 
+Respond to ad-hoc analytical requests, providing quick-turnaround insights to operational colleagues when necessary.
+
+Knowledge
+
+Proficiency in statistical programming languages (Python, R) and familiarity with relevant and modern-day libraries and frameworks such as polars, mlflow, xgboost, lightgbm and pytorch. 
+Thorough understanding of statistical methods, machine learning, deep learning, simulation, optimisation and hypothesis testing. 
+Experience scoping analytical solutions aligned with business challenges. 
+Strong awareness of data governance, ethics and compliance, including GDPR and Data Protection Act requirements, along with a solid understanding of the ethical implications and governance challenges posed by AI and emerging technologies 
+Familiarity with London's transport landscape and challenges.
+
+Skills
+
+Ability to extract actionable insights from complex, large-scale datasets through rigorous analysis. 
+Advanced capability in predictive analytics and the application of machine learning, deep learning and emerging AI techniques to solve complex business problems. 
+Clear and impactful communication skills, including presenting findings and complex concepts effectively to stakeholders across varying technical skill levels. 
+Ability to frame business problems clearly and design effective analytical solutions. 
+Collaborative working style, effectively engaging with multidisciplinary teams and stakeholders. 
+Strategic awareness and the ability to understand and communicate the wider business implications of analytical results. 
+Proactive, data-driven problem-solving approach.
+
+Experience
+
+Proven track record of delivering impactful analytical solutions in collaboration with stakeholders. 
+Extensive experience handling and analysing large, complex datasets to inform significant business decisions. 
+Demonstrable experience influencing strategic decisions through analytics, machine learning, or AI solutions. 
+Experience clearly communicating analytical findings to diverse audiences. 
+Experience with cloud-based analytical platforms (Azure, AWS, Google Cloud). 
+Hands-on experience with deep learning, image processing, NLP and familiarity with platforms like Databricks.
+Understanding of the foundation principles surrounding MLOps, including collaborative model optimisation, deployment and monitoring in production environments.

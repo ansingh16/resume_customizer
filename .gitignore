@@ -2,7 +2,7 @@
 __pycache__/
 *.py[codz]
 *$py.class
-
+test
 # C extensions
 *.so
 
@@ -133,6 +133,10 @@ celerybeat.pid
 
 # SageMath parsed files
 *.sage.py
+
+*.tex
+*.pdf 
+*.tar.gz 
 
 # Environments
 .env
