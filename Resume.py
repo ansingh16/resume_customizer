@@ -110,7 +110,7 @@ class ResumeModifier:
         job_description = Path(job_description_file).read_text(encoding="utf-8").strip()
 
         # Initialize the LLM
-        llm = ChatOllama(model="gemma:2b", validate_model_on_init=True,num_threads=4)
+        llm = ChatOllama(model="mistral:7b-instruct", validate_model_on_init=True,num_threads=4)
 
         # Prime system message
         system_message = f"""
