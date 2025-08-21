@@ -1,9 +1,8 @@
 import re 
 from pathlib import Path
-import google.generativeai as genai
 import subprocess
-import time 
-import os
+from langchain_ollama import ChatOllama
+
 # from dotenv import load_dotenv
 
 # load_dotenv()  # loads .env into environment
@@ -12,7 +11,6 @@ import os
 # # 🔑 Set your API key once (env variable recommended)
 # genai.configure(api_key=api_key)
 
-import ollama 
 
 
 class ResumeModifier:
@@ -102,86 +100,56 @@ class ResumeModifier:
 
 
     
-    def tailor_sections_with_model(self, job_description_file=None, model_name="gemini-2.5-pro", debug=False):
+    def tailor_sections_with_langchain(self, job_description_file="job_description.txt", debug=False):
         """
-        Reads job description from a file, sends each resume section to Gemini,
-        and tailors it accordingly. Returns modified section strings.
-        In debug mode, skips Gemini and prints each section.
+        Tailor LaTeX resume sections using LangChain + Ollama.
+        The model remembers the job description and edits each section accordingly.
         """
 
-                
-        model_name = "llama3:8b"
+        # Load job description
+        job_description = Path(job_description_file).read_text(encoding="utf-8").strip()
 
-        # Prime the model once with the job description
-        job_description = open("job_description.txt", "r", encoding="utf-8").read().strip()
+        # Initialize the LLM
+        llm = ChatOllama(model="gemma:2b", validate_model_on_init=True,num_threads=4)
 
-        # Create a system prompt to "prime" the model
-        system_prompt = f"""
-        You are an expert resume editor. 
+        # Prime system message
+        system_message = f"""
+        You are an expert resume editor.
         The following is the job description to align the resume sections with:
         {job_description}
-        Only edit the content of each LaTeX resume section given to you. 
-        ONLY return the edited LaTeX content. Do NOT include explanations, summaries, or comments. Keep all LaTeX commands intact.
 
+        Only edit the content of each LaTeX resume section given to you.
+        ONLY return the edited LaTeX content. Do NOT include explanations, summaries, or comments.
+        Keep all LaTeX commands intact.
         """
+
         tailored_sections = []
+
+        # We'll maintain a conversation context so the model "remembers" job description
+        conversation_history = [{"role": "system", "content": system_message}]
 
         for i, sec in enumerate(self.sections, 1):
             print(f"Tailoring section {i}")
-            
-            # Use a concise prompt with the section
-            prompt = f"{system_prompt}\nResume section:\n{sec}\nEdited section:"
 
-            response = ollama.generate(model=model_name, prompt=prompt)
+            if debug:
+                print("DEBUG section:\n", sec)
+                tailored_sections.append(sec)
+                continue
 
-            
-            # Extract the text from the response
-            edited_sec = response.get("response", sec)  # fallback to original if empty
-            tailored_sections.append(edited_sec)
+            # Add the section as user input
+            conversation_history.append({"role": "user", "content": f"Resume section:\n{sec}\nEdited section:"})
+
+            # Invoke the LLM
+            response = llm.invoke(conversation_history)
+
+            # Extract content
+            edited_sec = response.content.strip()
+            tailored_sections.append(edited_sec or sec)  # fallback to original
+
+            # Optionally, append model response to conversation history to maintain context
+            conversation_history.append({"role": "assistant", "content": edited_sec})
 
         self.tailored_sections = tailored_sections
-        
-
-        # # Read job description from file
-        # job_description = Path(job_description_file).read_text(encoding="utf-8").strip()
-
-        # # Initialize the Generative Model
-        # model = genai.GenerativeModel(model_name)
-
-        # # Prime the model with job description once
-        # system_prompt = f"""
-        # You are an expert resume editor. Tailor the content of resume sections
-        # so they better match the following job description.
-        # Do NOT change LaTeX commands, only the text.
-
-        # Job description:
-        # {job_description}
-        # """
-
-        # tailored = []
-
-        # for i, sec in enumerate(self.sections, start=1):
-
-        #     print(f"Processing section {i}/{len(self.sections)}...")
-        #     user_prompt = f"Modify this resume section:\n{sec}"
-            
-        #     response = model.generate_content(
-        #         messages=[
-        #             {"role": "system", "content": system_prompt},
-        #             {"role": "user", "content": user_prompt}
-        #         ]
-        #     )
-
-        #     if response.candidates and response.candidates[0].content and response.candidates[0].content.parts:
-        #         edited_sec = "".join([part.text for part in response.candidates[0].content.parts if part.text])
-        #     else:
-        #         edited_sec = sec  # fallback
-
-        #     tailored.append(edited_sec)
-
-
-        # self.tailored_sections = tailored
-
 
    
     def assemble_resume(self):
@@ -238,7 +206,7 @@ class ResumeModifier:
         # If job description is provided, tailor sections with the model
         print("Tailoring sections with the model...")
         if self.job_description:
-            self.tailor_sections_with_model(self.job_description, debug=debug)
+            self.tailor_sections_with_langchain(self.job_description, debug=debug)
         else:
             print("No job description provided. Skipping tailoring.")
 
